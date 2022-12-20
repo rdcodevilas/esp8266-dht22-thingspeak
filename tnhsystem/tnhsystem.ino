@@ -42,12 +42,12 @@ void loop()
   
       float h = dht.readHumidity();
       float t = dht.readTemperature();
-      float tg = 7;
-      float tgm = 42;
-      float good = 100;
-      float hg = 40; 
-      float hgm = 70;
-      float bad = 0;                 
+      // float tg = 7;
+      // float tgm = 42;
+      // float good = 100;
+      // float hg = 40; 
+      // float hgm = 70;
+      // float bad = 0;                 
       
               if (isnan(h) || isnan(t)) 
                  {
@@ -63,23 +63,23 @@ void loop()
                              postStr += String(t);                            
                              postStr +="&field2=";
                              postStr += String(h);
-                             if ((tg = tg) && (hg =hg)){
-                             postStr +="&field3=";
-                             postStr += String(good);                               
-                             }
-                             else if ((tg <= tgm) && (hg <=hgm)){ 
-                             postStr +="&field3=";    
-                             postStr += String(good);                           
-                             }
-                             else if ((tg <= tgm) && (hg >=hgm)){ 
-                             postStr +="&field3=";    
-                             postStr += String(good);                           
-                             }
-                             else if ((tg >= tgm) && (hg >=hgm)){ 
-                             postStr +="&field3=";    
-                             postStr += String(good);                           
-                             }
-                             postStr += "\r\n\r\n\r\n\r\n";
+                            //  if ((tg = tg) && (hg =hg)){
+                            //  postStr +="&field3=";
+                            //  postStr += String(good);                               
+                            //  }
+                            //  else if ((tg <= tgm) && (hg <=hgm)){ 
+                            //  postStr +="&field3=";    
+                            //  postStr += String(good);                           
+                            //  }
+                            //  else if ((tg <= tgm) && (hg >=hgm)){ 
+                            //  postStr +="&field3=";    
+                            //  postStr += String(good);                           
+                            //  }
+                            //  else if ((tg >= tgm) && (hg >=hgm)){ 
+                            //  postStr +="&field3=";    
+                            //  postStr += String(good);                           
+                            //  }
+                             postStr += "\r\n\r\n";
                              
                              client.print("POST /update HTTP/1.1\n");
                              client.print("Host: api.thingspeak.com\n");
