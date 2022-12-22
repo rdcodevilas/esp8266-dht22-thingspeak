@@ -47,39 +47,37 @@ void Ultrasonic_Avoidance() {
     Front_Distance = checkdistance();
     Serial.println(Front_Distance);
     if (Left_IR_Value == 0 && Right_IR_Value == 1) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,(5 * 22.5));
-      digitalWrite(4,HIGH);
-      analogWrite(6,(5 * 22.5));
+      digitalWrite(2, HIGH);
+      analogWrite(5, (5 * 22.5));
+      digitalWrite(4, HIGH);
+      analogWrite(6, (5 * 22.5));
 
     } else if (Left_IR_Value == 1 && Right_IR_Value == 0) {
-      digitalWrite(2,LOW);
-      analogWrite(5,(5 * 22.5));
-      digitalWrite(4,LOW);
-      analogWrite(6,(5 * 22.5));
+      digitalWrite(2, LOW);
+      analogWrite(5, (5 * 22.5));
+      digitalWrite(4, LOW);
+      analogWrite(6, (5 * 22.5));
     } else {
-      digitalWrite(2,HIGH);
-      analogWrite(5,(4 * 22.5));
-      digitalWrite(4,LOW);
-      analogWrite(6,(4 * 22.5));
-
+      digitalWrite(2, HIGH);
+      analogWrite(5, (4 * 22.5));
+      digitalWrite(4, LOW);
+      analogWrite(6, (4 * 22.5));
     }
     if (Front_Distance <= D_mid) {
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
       if (Front_Distance <= D_mix || Left_IR_Value == 0 && Right_IR_Value == 0) {
-        digitalWrite(2,LOW);
-        analogWrite(5,(4.5 * 22.5));
-        digitalWrite(4,HIGH);
-        analogWrite(6,(4.5 * 22.5));
+        digitalWrite(2, LOW);
+        analogWrite(5, (4.5 * 22.5));
+        digitalWrite(4, HIGH);
+        analogWrite(6, (4.5 * 22.5));
         delay(300);
-        digitalWrite(2,LOW);
-        analogWrite(5,0);
-        digitalWrite(4,HIGH);
-        analogWrite(6,0);
-
+        digitalWrite(2, LOW);
+        analogWrite(5, 0);
+        digitalWrite(4, HIGH);
+        analogWrite(6, 0);
       }
       myservo.write(165);
       delay(500);
@@ -94,52 +92,50 @@ void Ultrasonic_Avoidance() {
       myservo.write(90);
       if ((D_mix < Left_Distance && Left_Distance < D_max) && (D_mix < Right_Distance && Right_Distance < D_max)) {
         if (Right_Distance > Left_Distance) {
-          digitalWrite(2,HIGH);
-          analogWrite(5,(9 * 22.5));
-          digitalWrite(4,HIGH);
-          analogWrite(6,(9 * 22.5));
+          digitalWrite(2, HIGH);
+          analogWrite(5, (9 * 22.5));
+          digitalWrite(4, HIGH);
+          analogWrite(6, (9 * 22.5));
           delay(250);
 
         } else {
-          digitalWrite(2,LOW);
-          analogWrite(5,(9 * 22.5));
-          digitalWrite(4,LOW);
-          analogWrite(6,(9 * 22.5));
+          digitalWrite(2, LOW);
+          analogWrite(5, (9 * 22.5));
+          digitalWrite(4, LOW);
+          analogWrite(6, (9 * 22.5));
           delay(250);
-
         }
 
       } else if (D_mix < Left_Distance && Left_Distance < D_max || D_mix < Right_Distance && Right_Distance < D_max) {
         if (D_mix < Left_Distance && Left_Distance < D_max) {
-          digitalWrite(2,LOW);
-          analogWrite(5,(7 * 22.5));
-          digitalWrite(4,LOW);
-          analogWrite(6,(7 * 22.5));
+          digitalWrite(2, LOW);
+          analogWrite(5, (7 * 22.5));
+          digitalWrite(4, LOW);
+          analogWrite(6, (7 * 22.5));
           delay(250);
 
         } else if (D_mix < Right_Distance && Right_Distance < D_max) {
-          digitalWrite(2,HIGH);
-          analogWrite(5,(7 * 22.5));
-          digitalWrite(4,HIGH);
-          analogWrite(6,(7 * 22.5));
+          digitalWrite(2, HIGH);
+          analogWrite(5, (7 * 22.5));
+          digitalWrite(4, HIGH);
+          analogWrite(6, (7 * 22.5));
           delay(250);
         }
       } else if (Right_Distance < D_mix && Left_Distance < D_mix) {
-        digitalWrite(2,HIGH);
-        analogWrite(5,0);
-        digitalWrite(4,LOW);
-        analogWrite(6,(9 * 22.5));
+        digitalWrite(2, HIGH);
+        analogWrite(5, 0);
+        digitalWrite(4, LOW);
+        analogWrite(6, (9 * 22.5));
         delay(510);
-        digitalWrite(2,LOW);
-        analogWrite(5,0);
-        digitalWrite(4,HIGH);
-        analogWrite(6,0);
+        digitalWrite(2, LOW);
+        analogWrite(5, 0);
+        digitalWrite(4, HIGH);
+        analogWrite(6, 0);
       }
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
     BLE_value = "";
     while (Serial.available() > 0) {
@@ -148,11 +144,10 @@ void Ultrasonic_Avoidance() {
     }
     if ('%' == String(BLE_value).charAt(0) && 'Q' == String(BLE_value).charAt(1)) {
       Funtion_FLag = false;
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
   }
 }
@@ -170,56 +165,56 @@ void Ultrasonic_Follow() {
     Right_IR_Value = digitalRead(A2);
     Front_Distance = checkdistance();
     if (Front_Distance < 5 && (Left_IR_Value != Infrared_Trigger_Flag && Right_IR_Value != Infrared_Trigger_Flag)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,(4 * 25.5));
-      digitalWrite(4,HIGH);
-      analogWrite(6,(4 * 25.5));
+      digitalWrite(2, LOW);
+      analogWrite(5, (4 * 25.5));
+      digitalWrite(4, HIGH);
+      analogWrite(6, (4 * 25.5));
 
     } else if (Front_Distance < 5 && (Left_IR_Value == Infrared_Trigger_Flag && Right_IR_Value != Infrared_Trigger_Flag)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,(8 * 25.5));
-      digitalWrite(4,HIGH);
-      analogWrite(6,(0.2 * (6 * 255)));
+      digitalWrite(2, LOW);
+      analogWrite(5, (8 * 25.5));
+      digitalWrite(4, HIGH);
+      analogWrite(6, (0.2 * (6 * 255)));
     } else if (Front_Distance < 10 && (Left_IR_Value != Infrared_Trigger_Flag && Right_IR_Value == Infrared_Trigger_Flag)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,(0.2 * (6 * 255)));
-      digitalWrite(4,HIGH);
-      analogWrite(6,(8 * 25.5));
+      digitalWrite(2, LOW);
+      analogWrite(5, (0.2 * (6 * 255)));
+      digitalWrite(4, HIGH);
+      analogWrite(6, (8 * 25.5));
     } else if (Front_Distance < 5 && (Left_IR_Value == Infrared_Trigger_Flag && Right_IR_Value == Infrared_Trigger_Flag)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,(4 * 25.5));
-      digitalWrite(4,HIGH);
-      analogWrite(6,(4 * 25.5));
+      digitalWrite(2, LOW);
+      analogWrite(5, (4 * 25.5));
+      digitalWrite(4, HIGH);
+      analogWrite(6, (4 * 25.5));
     } else if (Front_Distance > 10 && (Left_IR_Value != Infrared_Trigger_Flag && Right_IR_Value != Infrared_Trigger_Flag)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,(6 * 25.5));
-      digitalWrite(4,LOW);
-      analogWrite(6,(6 * 25.5));
+      digitalWrite(2, HIGH);
+      analogWrite(5, (6 * 25.5));
+      digitalWrite(4, LOW);
+      analogWrite(6, (6 * 25.5));
     } else if (Front_Distance > 10 && (Left_IR_Value == Infrared_Trigger_Flag && Right_IR_Value != Infrared_Trigger_Flag)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,(6 * 25.5));
-      digitalWrite(4,LOW);
-      analogWrite(6,(6 * 25.5));
+      digitalWrite(2, LOW);
+      analogWrite(5, (6 * 25.5));
+      digitalWrite(4, LOW);
+      analogWrite(6, (6 * 25.5));
     } else if (Front_Distance > 10 && (Left_IR_Value != Infrared_Trigger_Flag && Right_IR_Value == Infrared_Trigger_Flag)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,(6 * 25.5));
-      digitalWrite(4,HIGH);
-      analogWrite(6,(6 * 25.5));
+      digitalWrite(2, HIGH);
+      analogWrite(5, (6 * 25.5));
+      digitalWrite(4, HIGH);
+      analogWrite(6, (6 * 25.5));
     } else if ((5 <= Front_Distance && Front_Distance <= 10) && (Left_IR_Value != Infrared_Trigger_Flag && Right_IR_Value == Infrared_Trigger_Flag)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,(8 * 25.5));
-      digitalWrite(4,LOW);
-      analogWrite(6,(0.2 * (6 * 25.5)));
+      digitalWrite(2, HIGH);
+      analogWrite(5, (8 * 25.5));
+      digitalWrite(4, LOW);
+      analogWrite(6, (0.2 * (6 * 25.5)));
     } else if ((5 <= Front_Distance && Front_Distance <= 10) && (Left_IR_Value == Infrared_Trigger_Flag && Right_IR_Value != Infrared_Trigger_Flag)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,(0.2 * (6 * 25.5)));
-      digitalWrite(4,LOW);
-      analogWrite(6,(8 * 25.5));
+      digitalWrite(2, HIGH);
+      analogWrite(5, (0.2 * (6 * 25.5)));
+      digitalWrite(4, LOW);
+      analogWrite(6, (8 * 25.5));
     } else if ((5 <= Front_Distance && Front_Distance <= 10) && (Left_IR_Value != Infrared_Trigger_Flag && Right_IR_Value != Infrared_Trigger_Flag)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
     BLE_value = "";
     while (Serial.available() > 0) {
@@ -228,11 +223,10 @@ void Ultrasonic_Follow() {
     }
     if ('%' == String(BLE_value).charAt(0) && 'Q' == String(BLE_value).charAt(1)) {
       Funtion_FLag = false;
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
   }
 }
@@ -249,36 +243,36 @@ void Infrared_Tracing() {
     Center_Tra_Value = digitalRead(8);
     Right_Tra_Value = digitalRead(9);
     if (Left_Tra_Value != Black && (Center_Tra_Value == Black && Right_Tra_Value != Black)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,120);
-      digitalWrite(4,LOW);
-      analogWrite(6,120);
+      digitalWrite(2, HIGH);
+      analogWrite(5, 120);
+      digitalWrite(4, LOW);
+      analogWrite(6, 120);
 
     } else if (Left_Tra_Value == Black && (Center_Tra_Value == Black && Right_Tra_Value != Black)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,120);
-      digitalWrite(4,LOW);
-      analogWrite(6,120);
+      digitalWrite(2, LOW);
+      analogWrite(5, 120);
+      digitalWrite(4, LOW);
+      analogWrite(6, 120);
     } else if (Left_Tra_Value == Black && (Center_Tra_Value != Black && Right_Tra_Value != Black)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,100);
-      digitalWrite(4,LOW);
-      analogWrite(6,100);
+      digitalWrite(2, LOW);
+      analogWrite(5, 100);
+      digitalWrite(4, LOW);
+      analogWrite(6, 100);
     } else if (Left_Tra_Value != Black && (Center_Tra_Value != Black && Right_Tra_Value == Black)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,100);
-      digitalWrite(4,HIGH);
-      analogWrite(6,100);
+      digitalWrite(2, HIGH);
+      analogWrite(5, 100);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 100);
     } else if (Left_Tra_Value != Black && (Center_Tra_Value == Black && Right_Tra_Value == Black)) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,120);
-      digitalWrite(4,HIGH);
-      analogWrite(6,120);
+      digitalWrite(2, HIGH);
+      analogWrite(5, 120);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 120);
     } else if (Left_Tra_Value == Black && (Center_Tra_Value == Black && Right_Tra_Value == Black)) {
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     } else if (false) {
     }
     BLE_value = "";
@@ -288,17 +282,15 @@ void Infrared_Tracing() {
     }
     if ('%' == String(BLE_value).charAt(0) && 'Q' == String(BLE_value).charAt(1)) {
       Funtion_FLag = false;
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
   }
 }
 
-float mapfloat(float x, float in_min, float in_max, float out_min, float out_max)
-{
+float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 void G_Drive() {
@@ -312,84 +304,82 @@ void G_Drive() {
       Serial.println(G_Bluetooth_value);
       G_string_len = String(G_Bluetooth_value).length();
       if (G_string_len <= 7 && ('@' == String(G_Bluetooth_value).charAt(0) && '#' == String(G_Bluetooth_value).charAt((G_string_len - 2)))) {
-        G_degree = String(String(G_Bluetooth_value).substring(1,(G_string_len - 2))).toInt();
+        G_degree = String(String(G_Bluetooth_value).substring(1, (G_string_len - 2))).toInt();
         float value = (BLE_Change_SPEED / 10) * 18;
         double d_speed = 0.00;
         if (0 <= G_degree && G_degree < 75) {
           d_speed = (mapfloat(G_degree, 0, 75, 0, 0.6));
-          digitalWrite(2,HIGH);
-          analogWrite(5,value);
-          digitalWrite(4,LOW);
-          analogWrite(6,(d_speed * value));
+          digitalWrite(2, HIGH);
+          analogWrite(5, value);
+          digitalWrite(4, LOW);
+          analogWrite(6, (d_speed * value));
 
         } else if (105 < G_degree && G_degree < 180) {
           d_speed = (mapfloat(G_degree, 180, 105, 0, 0.6));
-          digitalWrite(2,HIGH);
-          analogWrite(5,(d_speed * value));
-          digitalWrite(4,LOW);
-          analogWrite(6,value);
+          digitalWrite(2, HIGH);
+          analogWrite(5, (d_speed * value));
+          digitalWrite(4, LOW);
+          analogWrite(6, value);
         } else if (-180 < G_degree && G_degree < -105) {
           d_speed = (mapfloat(G_degree, (-180), (-105), 0, 0.6));
-          digitalWrite(2,LOW);
-          analogWrite(5,(d_speed * value));
-          digitalWrite(4,HIGH);
-          analogWrite(6,value);
+          digitalWrite(2, LOW);
+          analogWrite(5, (d_speed * value));
+          digitalWrite(4, HIGH);
+          analogWrite(6, value);
         } else if (-75 < G_degree && G_degree < 0) {
           d_speed = (mapfloat(G_degree, (-75), 0, 0.6, 0));
-          digitalWrite(2,LOW);
-          analogWrite(5,value);
-          digitalWrite(4,HIGH);
-          analogWrite(6,(d_speed * value));
+          digitalWrite(2, LOW);
+          analogWrite(5, value);
+          digitalWrite(4, HIGH);
+          analogWrite(6, (d_speed * value));
         } else if (75 <= G_degree && G_degree <= 105) {
           d_speed = 1;
-          digitalWrite(2,HIGH);
-          analogWrite(5,value);
-          digitalWrite(4,LOW);
-          analogWrite(6,(d_speed * value));
+          digitalWrite(2, HIGH);
+          analogWrite(5, value);
+          digitalWrite(4, LOW);
+          analogWrite(6, (d_speed * value));
         } else if (-105 <= G_degree && G_degree <= -75) {
           d_speed = 1;
-          digitalWrite(2,LOW);
-          analogWrite(5,(d_speed * value));
-          digitalWrite(4,HIGH);
-          analogWrite(6,value);
+          digitalWrite(2, LOW);
+          analogWrite(5, (d_speed * value));
+          digitalWrite(4, HIGH);
+          analogWrite(6, value);
         }
 
       } else if ('%' == String(G_Bluetooth_value).charAt(0) && 'Q' == String(G_Bluetooth_value).charAt(1)) {
         Funtion_FLag = false;
-        digitalWrite(2,LOW);
-        analogWrite(5,0);
-        digitalWrite(4,HIGH);
-        analogWrite(6,0);
+        digitalWrite(2, LOW);
+        analogWrite(5, 0);
+        digitalWrite(4, HIGH);
+        analogWrite(6, 0);
       } else if ('%' == String(G_Bluetooth_value).charAt(0) && '+' == String(G_Bluetooth_value).charAt((G_string_len - 2))) {
-        BLE_Change_SPEED = String(String(G_Bluetooth_value).substring(1,(G_string_len - 2))).toInt();
+        BLE_Change_SPEED = String(String(G_Bluetooth_value).substring(1, (G_string_len - 2))).toInt();
         Serial.println(BLE_Change_SPEED);
       } else if ('%' == String(G_Bluetooth_value).charAt(0) && '-' == String(G_Bluetooth_value).charAt((G_string_len - 2))) {
-        BLE_Change_SPEED = String(String(G_Bluetooth_value).substring(1,(G_string_len - 2))).toInt();
+        BLE_Change_SPEED = String(String(G_Bluetooth_value).substring(1, (G_string_len - 2))).toInt();
         Serial.println(BLE_Change_SPEED);
       } else if ('%' == String(G_Bluetooth_value).charAt(0) && 'L' == String(G_Bluetooth_value).charAt(1)) {
-        digitalWrite(2,LOW);
-        analogWrite(5,((BLE_Change_SPEED / 10) * 22.5));
-        digitalWrite(4,LOW);
-        analogWrite(6,((BLE_Change_SPEED / 10) * 22.5));
+        digitalWrite(2, LOW);
+        analogWrite(5, ((BLE_Change_SPEED / 10) * 22.5));
+        digitalWrite(4, LOW);
+        analogWrite(6, ((BLE_Change_SPEED / 10) * 22.5));
       } else if ('%' == String(G_Bluetooth_value).charAt(0) && 'R' == String(G_Bluetooth_value).charAt(1)) {
-        digitalWrite(2,HIGH);
-        analogWrite(5,((BLE_Change_SPEED / 10) * 22.5));
-        digitalWrite(4,HIGH);
-        analogWrite(6,((BLE_Change_SPEED / 10) * 22.5));
+        digitalWrite(2, HIGH);
+        analogWrite(5, ((BLE_Change_SPEED / 10) * 22.5));
+        digitalWrite(4, HIGH);
+        analogWrite(6, ((BLE_Change_SPEED / 10) * 22.5));
       } else if ('%' == String(G_Bluetooth_value).charAt(0) && 'S' == String(G_Bluetooth_value).charAt(1)) {
-        digitalWrite(2,LOW);
-        analogWrite(5,0);
-        digitalWrite(4,HIGH);
-        analogWrite(6,0);
+        digitalWrite(2, LOW);
+        analogWrite(5, 0);
+        digitalWrite(4, HIGH);
+        analogWrite(6, 0);
       } else {
-        digitalWrite(2,LOW);
-        analogWrite(5,0);
-        digitalWrite(4,HIGH);
-        analogWrite(6,0);
-
+        digitalWrite(2, LOW);
+        analogWrite(5, 0);
+        digitalWrite(4, HIGH);
+        analogWrite(6, 0);
       }
       G_Bluetooth_value = "";
-
     }
     G_Bluetooth_value = "";
   }
@@ -401,10 +391,10 @@ void Light_Seeking() {
     Left_photosensitive = analogRead(A0) / 10;
     Right_photosensitive = analogRead(A3) / 10;
     if (Left_photosensitive > 55 && Right_photosensitive > 55) {
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
 
     } else {
       if (Left_photosensitive > Right_photosensitive) {
@@ -417,21 +407,18 @@ void Light_Seeking() {
       }
       if (Lightseeking_Degree <= 90) {
         f = ((float)(Lightseeking_Degree)) / 270;
-        digitalWrite(2,HIGH);
-        analogWrite(5,speed_value);
-        digitalWrite(4,LOW);
-        analogWrite(6,(speed_value * f));
-
+        digitalWrite(2, HIGH);
+        analogWrite(5, speed_value);
+        digitalWrite(4, LOW);
+        analogWrite(6, (speed_value * f));
       }
       if (Lightseeking_Degree > 90) {
         f = ((float)(180 - Lightseeking_Degree)) / 270;
-        digitalWrite(2,HIGH);
-        analogWrite(5,(speed_value * f));
-        digitalWrite(4,LOW);
-        analogWrite(6,speed_value);
-
+        digitalWrite(2, HIGH);
+        analogWrite(5, (speed_value * f));
+        digitalWrite(4, LOW);
+        analogWrite(6, speed_value);
       }
-
     }
     BLE_value = "";
     while (Serial.available() > 0) {
@@ -440,11 +427,10 @@ void Light_Seeking() {
     }
     if ('%' == String(BLE_value).charAt(0) && 'Q' == String(BLE_value).charAt(1)) {
       Funtion_FLag = false;
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
   }
 }
@@ -452,52 +438,52 @@ void Light_Seeking() {
 void Infraed_Remote() {
   Funtion_FLag = true;
   while (Funtion_FLag) {
-    if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_UP) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,150);
-      digitalWrite(4,LOW);
-      analogWrite(6,150);
+    if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_UP) {
+      digitalWrite(2, HIGH);
+      analogWrite(5, 150);
+      digitalWrite(4, LOW);
+      analogWrite(6, 150);
 
-    } else if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_DOWN) {
-      digitalWrite(2,LOW);
-      analogWrite(5,150);
-      digitalWrite(4,HIGH);
-      analogWrite(6,150);
-    } else if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_LEFT) {
-      digitalWrite(2,LOW);
-      analogWrite(5,150);
-      digitalWrite(4,LOW);
-      analogWrite(6,150);
+    } else if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_DOWN) {
+      digitalWrite(2, LOW);
+      analogWrite(5, 150);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 150);
+    } else if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_LEFT) {
+      digitalWrite(2, LOW);
+      analogWrite(5, 150);
+      digitalWrite(4, LOW);
+      analogWrite(6, 150);
       delay(200);
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-    } else if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_RIGHT) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,150);
-      digitalWrite(4,HIGH);
-      analogWrite(6,150);
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
+    } else if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_RIGHT) {
+      digitalWrite(2, HIGH);
+      analogWrite(5, 150);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 150);
       delay(200);
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-    } else if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_OK) {
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-    } else if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_1) {
-      digitalWrite(2,LOW);
-      analogWrite(5,150);
-      digitalWrite(4,LOW);
-      analogWrite(6,150);
-    } else if (ir.getIrKey(ir.getCode(),1) == IR_KEYCODE_3) {
-      digitalWrite(2,HIGH);
-      analogWrite(5,150);
-      digitalWrite(4,HIGH);
-      analogWrite(6,150);
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
+    } else if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_OK) {
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
+    } else if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_1) {
+      digitalWrite(2, LOW);
+      analogWrite(5, 150);
+      digitalWrite(4, LOW);
+      analogWrite(6, 150);
+    } else if (ir.getIrKey(ir.getCode(), 1) == IR_KEYCODE_3) {
+      digitalWrite(2, HIGH);
+      analogWrite(5, 150);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 150);
     }
     BLE_value = "";
     while (Serial.available() > 0) {
@@ -506,16 +492,15 @@ void Infraed_Remote() {
     }
     if ('%' == String(BLE_value).charAt(0) && 'Q' == String(BLE_value).charAt(1)) {
       Funtion_FLag = false;
-      digitalWrite(2,LOW);
-      analogWrite(5,0);
-      digitalWrite(4,HIGH);
-      analogWrite(6,0);
-
+      digitalWrite(2, LOW);
+      analogWrite(5, 0);
+      digitalWrite(4, HIGH);
+      analogWrite(6, 0);
     }
   }
 }
 
-void setup(){
+void setup() {
   Serial.begin(9600);
   BLE_bit_temp = 'a';
   BLE_value = "";
@@ -552,7 +537,7 @@ void setup(){
   pinMode(A3, INPUT);
 }
 
-void loop(){
+void loop() {
   while (true) {
     while (Serial.available() > 0) {
       BLE_value = BLE_value + ((char)(Serial.read()));
@@ -563,36 +548,32 @@ void loop(){
       if (128 > String(BLE_value).length()) {
         if ('%' == String(BLE_value).charAt(0) && '#' == String(BLE_value).charAt(2)) {
           switch (String(BLE_value).charAt(1)) {
-           case 'G':
-            G_Drive();
-            break;
-           case 'T':
-            Infrared_Tracing();
-            break;
-           case 'P':
-            Light_Seeking();
-            break;
-           case 'I':
-            Infraed_Remote();
-            break;
-           case 'F':
-            Ultrasonic_Follow();
-            break;
-           case 'A':
-            Ultrasonic_Avoidance();
-            break;
+            case 'G':
+              G_Drive();
+              break;
+            case 'T':
+              Infrared_Tracing();
+              break;
+            case 'P':
+              Light_Seeking();
+              break;
+            case 'I':
+              Infraed_Remote();
+              break;
+            case 'F':
+              Ultrasonic_Follow();
+              break;
+            case 'A':
+              Ultrasonic_Avoidance();
+              break;
           }
           BLE_value = "";
 
         } else {
           BLE_value = "";
-
         }
-
       }
       BLE_value = "";
-
     }
   }
-
 }
