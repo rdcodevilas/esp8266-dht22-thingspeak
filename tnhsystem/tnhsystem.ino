@@ -7,8 +7,9 @@ const char* ssid = "yap";  // replace with your wifi ssid and wpa2 key
 const char* pass = "12345678";
 const char* server = "api.thingspeak.com";
 
-#define DHTPIN 0
-
+#define LED 5 // Led in NodeMCU at pin GPIO5 (D1).
+#define LED2 4 // Led in NodeMCU at pin GPIO2 (D2).
+#define DHTPIN 2
 // Initialize DHT sensor.
 DHT dht(DHTPIN, DHT22);
 
@@ -23,6 +24,8 @@ float bat_percentage;
 WiFiClient client;
 
 void setup() {
+  pinMode(LED, OUTPUT); // set the digital pin as output.
+  pinMode(LED2, OUTPUT); // set the digital pin as output.
   Serial.begin(115200);
   delay(10);
   dht.begin();
@@ -45,6 +48,7 @@ void loop() {
 
   float h = dht.readHumidity();
   float t = dht.readTemperature();
+  
 
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
@@ -67,9 +71,9 @@ void loop() {
 
     String postStr = apiKey;
     postStr += "&field1=";
-    postStr += String(t);
+    postStr += String(t + 0.8);
     postStr += "&field2=";
-    postStr += String(h);
+    postStr += String(h - 1.2);
     postStr += "&field3=";
     postStr += String(voltage);
     postStr += "&field4=";
@@ -78,23 +82,33 @@ void loop() {
     postStr += "\r\n\r\n";
 
     client.print("POST /update HTTP/1.1\n");
-    delay(100);
     client.print("Host: api.thingspeak.com\n");
-    delay(100);
     client.print("Connection: close\n");
-    delay(100);
     client.print("X-THINGSPEAKAPIKEY: " + apiKey + "\n");
-    delay(100);
     client.print("Content-Type: application/x-www-form-urlencoded\n");
-    delay(100);
     client.print("Content-Length: ");
-    delay(100);
     client.print(postStr.length());
-    delay(100);
     client.print("\n\n");
-    delay(100);
     client.print(postStr);
-    delay(100);
+
+    if ((h <= 90) && (t <= 40)){
+    digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
+    //the LED is on; this is because it is acive low on the ESP8266.
+    delay(1000);        
+    } else {
+    // wait for 1 second.
+    digitalWrite(LED, LOW); // turn the LED on.
+    delay(1000);         // wait for 1 second.       
+    }
+    if ((h >= 90) && (t >= 40)){
+    digitalWrite(LED2, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
+    //the LED is on; this is because it is acive low on the ESP8266.
+    delay(1000);        
+    } else {
+    // wait for 1 second.
+    digitalWrite(LED2, LOW); // turn the LED on.
+    delay(1000); 
+    }
 
     //Print data on serial monitor
     Serial.print("Temperature: ");
@@ -123,7 +137,7 @@ void loop() {
   client.stop();
   Serial.println("Sending...");
   // thingspeak needs minimum 15 sec delay between updates
-  delay(15000);
+  delay(1000);
 }
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
