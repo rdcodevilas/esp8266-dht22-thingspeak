@@ -71,9 +71,9 @@ void loop() {
 
     String postStr = apiKey;
     postStr += "&field1=";
-    postStr += String(t + 0.8);
+    postStr += String(t + 0.4);
     postStr += "&field2=";
-    postStr += String(h - 1.2);
+    postStr += String(h - 1);
     postStr += "&field3=";
     postStr += String(voltage);
     postStr += "&field4=";
@@ -91,7 +91,7 @@ void loop() {
     client.print("\n\n");
     client.print(postStr);
 
-    if ((h <= 90) && (t <= 40)){
+    if (h <= 90 && t <= 40){
     digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
     //the LED is on; this is because it is acive low on the ESP8266.
     delay(1000);        
@@ -100,7 +100,7 @@ void loop() {
     digitalWrite(LED, LOW); // turn the LED on.
     delay(1000);         // wait for 1 second.       
     }
-    if ((h >= 90) && (t >= 40)){
+    if (h >= 90 && t >= 40){
     digitalWrite(LED2, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
     //the LED is on; this is because it is acive low on the ESP8266.
     delay(1000);        
@@ -137,7 +137,7 @@ void loop() {
   client.stop();
   Serial.println("Sending...");
   // thingspeak needs minimum 15 sec delay between updates
-  delay(1000);
+  delay(10000);
 }
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
