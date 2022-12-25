@@ -7,8 +7,8 @@ const char* ssid = "yap";  // replace with your wifi ssid and wpa2 key
 const char* pass = "12345678";
 const char* server = "api.thingspeak.com";
 
-#define LED 5 // Led in NodeMCU at pin GPIO5 (D1).
-#define LED2 4 // Led in NodeMCU at pin GPIO2 (D2).
+#define LED D2 // Led in NodeMCU at pin GPIO5 (D1).
+#define LED2 D3 // Led in NodeMCU at pin GPIO2 (D2).
 #define DHTPIN 2
 // Initialize DHT sensor.
 DHT dht(DHTPIN, DHT22);
@@ -24,9 +24,11 @@ float bat_percentage;
 WiFiClient client;
 
 void setup() {
+  Serial.begin(115200);
+  digitalWrite(LED, HIGH);
+  digitalWrite(LED2, HIGH);
   pinMode(LED, OUTPUT); // set the digital pin as output.
   pinMode(LED2, OUTPUT); // set the digital pin as output.
-  Serial.begin(115200);
   delay(10);
   dht.begin();
 
@@ -48,6 +50,35 @@ void loop() {
 
   float h = dht.readHumidity();
   float t = dht.readTemperature();
+
+    if (t <= 40) {
+    digitalWrite(LED, HIGH); // turn the LED on.
+    Serial.println("LED ON");           
+    } else {
+    digitalWrite(LED, LOW); // turn the LED off.
+    Serial.println("LED OFF");
+    }
+    if (t >= 40) {
+    digitalWrite(LED2, HIGH); // turn the LED on. 
+    Serial.println("LED2 ON");      
+    } else {
+    digitalWrite(LED2, LOW); // turn the LED off.
+    Serial.println("LED2 OFF");
+    } 
+    if (h <= 90) {
+    digitalWrite(LED, HIGH); // turn the LED on.
+    Serial.println("LED ON");           
+    } else {
+    digitalWrite(LED, LOW); // turn the LED off.
+    Serial.println("LED OFF");
+    }
+    if (h >= 90) {
+    digitalWrite(LED2, HIGH); // turn the LED on. 
+    Serial.println("LED2 ON");      
+    } else {
+    digitalWrite(LED2, LOW); // turn the LED off.
+    Serial.println("LED2 OFF");
+    } 
   
 
   if (isnan(h) || isnan(t)) {
@@ -73,7 +104,7 @@ void loop() {
     postStr += "&field1=";
     postStr += String(t + 0.4);
     postStr += "&field2=";
-    postStr += String(h - 1);
+    postStr += String(h - 0.8);
     postStr += "&field3=";
     postStr += String(voltage);
     postStr += "&field4=";
@@ -90,26 +121,7 @@ void loop() {
     client.print(postStr.length());
     client.print("\n\n");
     client.print(postStr);
-
-    if (h <= 90 && t <= 40){
-    digitalWrite(LED, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
-    //the LED is on; this is because it is acive low on the ESP8266.
-    delay(1000);        
-    } else {
-    // wait for 1 second.
-    digitalWrite(LED, LOW); // turn the LED on.
-    delay(1000);         // wait for 1 second.       
-    }
-    if (h >= 90 && t >= 40){
-    digitalWrite(LED2, HIGH);// turn the LED off.(Note that LOW is the voltage level but actually
-    //the LED is on; this is because it is acive low on the ESP8266.
-    delay(1000);        
-    } else {
-    // wait for 1 second.
-    digitalWrite(LED2, LOW); // turn the LED on.
-    delay(1000); 
-    }
-
+    
     //Print data on serial monitor
     Serial.print("Temperature: ");
     Serial.print(t);
