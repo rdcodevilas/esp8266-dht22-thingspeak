@@ -51,28 +51,29 @@ void loop() {
   float h = dht.readHumidity();
   float t = dht.readTemperature();
 
-    if (t <= 40) {
+    //  Temperature and humidity Indicators
+    if ((t <= 32) && (h <= 70)){
     digitalWrite(LED, HIGH); // turn the LED on.
     Serial.println("LED ON");           
     } else {
     digitalWrite(LED, LOW); // turn the LED off.
     Serial.println("LED OFF");
     }
-    if (t >= 40) {
+    if ((t >= 33) && (h >= 71)){
     digitalWrite(LED2, HIGH); // turn the LED on. 
     Serial.println("LED2 ON");      
     } else {
     digitalWrite(LED2, LOW); // turn the LED off.
     Serial.println("LED2 OFF");
     } 
-    if (h <= 90) {
-    digitalWrite(LED, HIGH); // turn the LED on.
-    Serial.println("LED ON");           
+   if ((t <= 33) && (h >= 71)){
+    digitalWrite(LED2, HIGH); // turn the LED on. 
+    Serial.println("LED2 ON");      
     } else {
-    digitalWrite(LED, LOW); // turn the LED off.
-    Serial.println("LED OFF");
-    }
-    if (h >= 90) {
+    digitalWrite(LED2, LOW); // turn the LED off.
+    Serial.println("LED2 OFF");
+    } 
+    if ((t >= 33) && (h <= 71)){
     digitalWrite(LED2, HIGH); // turn the LED on. 
     Serial.println("LED2 ON");      
     } else {
@@ -80,7 +81,6 @@ void loop() {
     Serial.println("LED2 OFF");
     } 
   
-
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
     return;
@@ -149,7 +149,7 @@ void loop() {
   client.stop();
   Serial.println("Sending...");
   // thingspeak needs minimum 15 sec delay between updates
-  delay(10000);
+  delay(1000);
 }
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
