@@ -26,7 +26,7 @@ long distance;
 int set = 15;
 
 int bt_ir_data;  // variable to receive data from the serial port and IRremote
-int Speed = 130;
+int Speed = 70;
 int mode = 0;
 int IR_data;
 
@@ -49,7 +49,7 @@ void setup() {  // put your setup code here, to run once
   irrecv.blink13(true);
 
   Serial.begin(9600);  // start serial communication at 9600bps
-  BT_Serial.begin(9600);
+  // BT_Serial.begin(9600);
 
   pinMode(servo, OUTPUT);
 
@@ -92,11 +92,11 @@ void loop() {
   }  //Manual Android Application and IR Remote Control Command
   else if (bt_ir_data == 9) {
     mode = 1;
-    Speed = 130;
+    Speed = 135;
   }  //Auto Line Follower Command
   else if (bt_ir_data == 10) {
     mode = 2;
-    Speed = 255;
+    Speed = 70;
   }  //Auto Obstacle Avoiding Command
 
   analogWrite(enA, Speed);  // Write The Duty Cycle 0 to 255 Enable Pin A for Motor1 Speed
@@ -106,9 +106,9 @@ void loop() {
     //===============================================================================
     //                          Key Control Command
     //===============================================================================
-    if (bt_ir_data == 1) { forword(); }  // if the bt_data is '1' the DC motor will go forward
+    if (bt_ir_data == 1) { forward(); }  // if the bt_data is '1' the DC motor will go forward
     else if (bt_ir_data == 2) {
-      backword();
+      backward();
     }                                          // if the bt_data is '2' the motor will Reverse
     else if (bt_ir_data == 3) { turnLeft(); }  // if the bt_data is '3' the motor will turn left
     else if (bt_ir_data == 4) {
@@ -136,10 +136,10 @@ void loop() {
     //===============================================================================
     if ((digitalRead(R_S) == 0) && (digitalRead(L_S) == 0)) {
       if (distance_F > set) {
-        forword();
+        forward();
       } else {
         Check_side();
-      } //if Right Sensor and Left Sensor are at White color then it will call forword function
+      } //if Right Sensor and Left Sensor are at White color then it will call forward function
     }
     else if ((digitalRead(R_S) == 1) && (digitalRead(L_S) == 0)) { turnRight(); }  //if Right Sensor is Black and Left Sensor is White then it will call turn Right function
     else if ((digitalRead(R_S) == 0) && (digitalRead(L_S) == 1)) { turnLeft(); }  //if Right Sensor is White and Left Sensor is Black then it will call turn Left function
@@ -155,7 +155,7 @@ void loop() {
     Serial.print("S=");
     Serial.println(distance_F);
     if (distance_F > set) {
-      forword();
+      forward();
     } else {
       Check_side();
     }
@@ -209,22 +209,22 @@ void compareDistance() {
   if (distance_L > distance_R) {
     turnLeft();
     delay(500);
-    forword();
+    forward();
     delay(600);
     turnRight();
     delay(500);
-    forword();
+    forward();
     delay(600);
     turnRight();
     delay(400);
   } else {
     turnRight();
     delay(500);
-    forword();
+    forward();
     delay(600);
     turnLeft();
     delay(500);
-    forword();
+    forward();
     delay(600);
     turnLeft();
     delay(400);
@@ -253,37 +253,37 @@ void Check_side() {
   compareDistance();
 }
 
-void forword() {            //forword
-  digitalWrite(in1, HIGH);  //Right Motor forword Pin
-  digitalWrite(in2, LOW);   //Right Motor backword Pin
-  digitalWrite(in3, LOW);   //Left Motor backword Pin
-  digitalWrite(in4, HIGH);  //Left Motor forword Pin
+void forward() {            //forward
+  digitalWrite(in1, HIGH);  //Right Motor forward Pin
+  digitalWrite(in2, LOW);   //Right Motor backward Pin
+  digitalWrite(in3, LOW);   //Left Motor backward Pin
+  digitalWrite(in4, HIGH);  //Left Motor forward Pin
 }
 
-void backword() {           //backword
-  digitalWrite(in1, LOW);   //Right Motor forword Pin
-  digitalWrite(in2, HIGH);  //Right Motor backword Pin
-  digitalWrite(in3, HIGH);  //Left Motor backword Pin
-  digitalWrite(in4, LOW);   //Left Motor forword Pin
+void backward() {           //backward
+  digitalWrite(in1, LOW);   //Right Motor forward Pin
+  digitalWrite(in2, HIGH);  //Right Motor backward Pin
+  digitalWrite(in3, HIGH);  //Left Motor backward Pin
+  digitalWrite(in4, LOW);   //Left Motor forward Pin
 }
 
 void turnRight() {          //turnRight
-  digitalWrite(in1, LOW);   //Right Motor forword Pin
-  digitalWrite(in2, HIGH);  //Right Motor backword Pin
-  digitalWrite(in3, LOW);   //Left Motor backword Pin
-  digitalWrite(in4, HIGH);  //Left Motor forword Pin
+  digitalWrite(in1, LOW);   //Right Motor forward Pin
+  digitalWrite(in2, HIGH);  //Right Motor backward Pin
+  digitalWrite(in3, LOW);   //Left Motor backward Pin
+  digitalWrite(in4, HIGH);  //Left Motor forward Pin
 }
 
 void turnLeft() {           //turnLeft
-  digitalWrite(in1, HIGH);  //Right Motor forword Pin
-  digitalWrite(in2, LOW);   //Right Motor backword Pin
-  digitalWrite(in3, HIGH);  //Left Motor backword Pin
-  digitalWrite(in4, LOW);   //Left Motor forword Pin
+  digitalWrite(in1, HIGH);  //Right Motor forward Pin
+  digitalWrite(in2, LOW);   //Right Motor backward Pin
+  digitalWrite(in3, HIGH);  //Left Motor backward Pin
+  digitalWrite(in4, LOW);   //Left Motor forward Pin
 }
 
 void Stop() {              //stop
-  digitalWrite(in1, LOW);  //Right Motor forword Pin
-  digitalWrite(in2, LOW);  //Right Motor backword Pin
-  digitalWrite(in3, LOW);  //Left Motor backword Pin
-  digitalWrite(in4, LOW);  //Left Motor forword Pin
+  digitalWrite(in1, LOW);  //Right Motor forward Pin
+  digitalWrite(in2, LOW);  //Right Motor backward Pin
+  digitalWrite(in3, LOW);  //Left Motor backward Pin
+  digitalWrite(in4, LOW);  //Left Motor forward Pin
 }
