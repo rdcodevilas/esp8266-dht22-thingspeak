@@ -1,49 +1,49 @@
 #include <SoftwareSerial.h>
-SoftwareSerial BT_Serial(2, 3);  // RX, TX
+SoftwareSerial BT_Serial(2, 3); // RX, TX
 
 #include <IRremote.h>
 const int RECV_PIN = A5;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 
-#define enA 10  //Enable1 L298 Pin enA
-#define in1 9   //Motor1  L298 Pin in1
-#define in2 8   //Motor1  L298 Pin in1
-#define in3 7   //Motor2  L298 Pin in1
-#define in4 6   //Motor2  L298 Pin in1
-#define enB 5   //Enable2 L298 Pin enB
-
-#define L_S A1  //ir sensor Left
-#define R_S A0  //ir sensor Right
-
-#define echo A2     //Echo pin
-#define trigger A3  //Trigger pin
+#define enA 10//Enable1 L298 Pin enA 
+#define in1 9 //Motor1  L298 Pin in1 
+#define in2 8 //Motor1  L298 Pin in1 
+#define in3 7 //Motor2  L298 Pin in1 
+#define in4 6 //Motor2  L298 Pin in1 
+#define enB 5 //Enable2 L298 Pin enB 
 
 #define servo A4
 
-int distance_L, distance_F = 20, distance_R;
-long distance;
-int set = 15;
+#define R_S A0 //ir sensor Right
+#define L_S A1 //ir sensor Left
 
-int bt_ir_data;  // variable to receive data from the serial port and IRremote
-int Speed = 70;
-int mode = 0;
+#define echo A2    //Echo pin
+#define trigger A3 //Trigger pin
+
+int distance_L, distance_F = 30, distance_R;
+long distance;
+int set = 20;
+
+int bt_ir_data; // variable to receive data from the serial port and IRremote
+int Speed = 130;  
+int mode=0;
 int IR_data;
 
-void setup() {  // put your setup code here, to run once
+void setup(){ // put your setup code here, to run once
 
-  pinMode(R_S, INPUT);  // declare if sensor as input
-  pinMode(L_S, INPUT);  // declare ir sensor as input
+pinMode(R_S, INPUT); // declare if sensor as input  
+pinMode(L_S, INPUT); // declare ir sensor as input
 
-  pinMode(echo, INPUT);      // declare ultrasonic sensor Echo pin as input
-  pinMode(trigger, OUTPUT);  // declare ultrasonic sensor Trigger pin as Output
+pinMode(echo, INPUT );// declare ultrasonic sensor Echo pin as input
+pinMode(trigger, OUTPUT); // declare ultrasonic sensor Trigger pin as Output  
 
-  pinMode(enA, OUTPUT);  // declare as output for L298 Pin enA
-  pinMode(in1, OUTPUT);  // declare as output for L298 Pin in1
-  pinMode(in2, OUTPUT);  // declare as output for L298 Pin in2
-  pinMode(in3, OUTPUT);  // declare as output for L298 Pin in3
-  pinMode(in4, OUTPUT);  // declare as output for L298 Pin in4
-  pinMode(enB, OUTPUT);  // declare as output for L298 Pin enB
+pinMode(enA, OUTPUT); // declare as output for L298 Pin enA 
+pinMode(in1, OUTPUT); // declare as output for L298 Pin in1 
+pinMode(in2, OUTPUT); // declare as output for L298 Pin in2 
+pinMode(in3, OUTPUT); // declare as output for L298 Pin in3   
+pinMode(in4, OUTPUT); // declare as output for L298 Pin in4 
+pinMode(enB, OUTPUT); // declare as output for L298 Pin enB 
 
   irrecv.enableIRIn();  // Start the receiver
   irrecv.blink13(true);

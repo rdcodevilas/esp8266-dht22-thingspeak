@@ -52,34 +52,30 @@ void loop() {
   float t = dht.readTemperature();
 
     //  Temperature and humidity Indicators
-    if ((t <= 32) && (h <= 70)){
+    if ((t <= 32) && (h <= 80)){
     digitalWrite(LED, HIGH); // turn the LED on.
-    Serial.println("LED ON");           
+    Serial.println("GREEN LED ON");           
     } else {
     digitalWrite(LED, LOW); // turn the LED off.
-    Serial.println("LED OFF");
+    Serial.println("GREEN LED OFF");
     }
-    if ((t >= 33) && (h >= 71)){
+    
+    if ((t >= 33) && (h >= 86)){
     digitalWrite(LED2, HIGH); // turn the LED on. 
-    Serial.println("LED2 ON");      
+    Serial.println("RED >> LED2 ON");      
+    } else if ((t <= 6) && (h <= 86)){
+    digitalWrite(LED2, HIGH); // turn the LED on. 
+    Serial.println("RED >< LED2 ON");      
+    } else if ((t <= 6) && (h >= 86)){
+    digitalWrite(LED2, HIGH); // turn the LED on. 
+    Serial.println("RED >< LED2 ON");      
+    } else if ((t <= 33) && (h >= 86)){
+    digitalWrite(LED2, HIGH); // turn the LED on. 
+    Serial.println("RED <> LED2 ON");      
     } else {
     digitalWrite(LED2, LOW); // turn the LED off.
-    Serial.println("LED2 OFF");
-    } 
-   if ((t <= 33) && (h >= 71)){
-    digitalWrite(LED2, HIGH); // turn the LED on. 
-    Serial.println("LED2 ON");      
-    } else {
-    digitalWrite(LED2, LOW); // turn the LED off.
-    Serial.println("LED2 OFF");
-    } 
-    if ((t >= 33) && (h <= 71)){
-    digitalWrite(LED2, HIGH); // turn the LED on. 
-    Serial.println("LED2 ON");      
-    } else {
-    digitalWrite(LED2, LOW); // turn the LED off.
-    Serial.println("LED2 OFF");
-    } 
+    Serial.println("RED LED2 OFF");
+    }
   
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
@@ -102,9 +98,9 @@ void loop() {
 
     String postStr = apiKey;
     postStr += "&field1=";
-    postStr += String(t + 0.4);
+    postStr += String(t + 1.2);
     postStr += "&field2=";
-    postStr += String(h - 0.8);
+    postStr += String(h - 7.2);
     postStr += "&field3=";
     postStr += String(voltage);
     postStr += "&field4=";
